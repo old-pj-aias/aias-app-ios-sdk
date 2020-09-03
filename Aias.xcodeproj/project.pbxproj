@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BC05CBD925011C610099829D /* Aias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE4361925011BF00003C0C4 /* Aias.framework */; };
 		BC05CBDA25011C610099829D /* Aias.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BCE4361925011BF00003C0C4 /* Aias.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BC05CBE0250120B80099829D /* KeyPairManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC05CBDF250120B80099829D /* KeyPairManager.swift */; };
 		BCE4361E25011BF00003C0C4 /* Aias.h in Headers */ = {isa = PBXBuildFile; fileRef = BCE4361C25011BF00003C0C4 /* Aias.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BCE4362525011BFB0003C0C4 /* Aias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE4362425011BFB0003C0C4 /* Aias.swift */; };
 		BCE4362E25011C2C0003C0C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE4362D25011C2C0003C0C4 /* AppDelegate.swift */; };
@@ -44,7 +43,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BC05CBDF250120B80099829D /* KeyPairManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPairManager.swift; sourceTree = "<group>"; };
 		BCE4361925011BF00003C0C4 /* Aias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Aias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE4361C25011BF00003C0C4 /* Aias.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aias.h; sourceTree = "<group>"; };
 		BCE4361D25011BF00003C0C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,14 +82,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BC05CBDE250120AB0099829D /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				BC05CBDF250120B80099829D /* KeyPairManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		BCE4360F25011BF00003C0C4 = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +106,6 @@
 			children = (
 				BCE4361C25011BF00003C0C4 /* Aias.h */,
 				BCE4361D25011BF00003C0C4 /* Info.plist */,
-				BC05CBDE250120AB0099829D /* Manager */,
 				BCE4362425011BFB0003C0C4 /* Aias.swift */,
 			);
 			path = Aias;
@@ -250,7 +239,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCE4362525011BFB0003C0C4 /* Aias.swift in Sources */,
-				BC05CBE0250120B80099829D /* KeyPairManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
