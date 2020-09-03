@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public final class Aias {
-
+    
     public static let shared = Aias()
     
     private var signature = ""
@@ -35,9 +35,7 @@ public final class Aias {
         if !isPublicKeyExist{
             do{
                 self.publicKey = try KeyPairManager().generateKeyPair()
-            }catch{
-                throw AiasError.failedToGenerateKey
-            }
+            }catch{}
         }
         let encodedKey = Base64Manager().encode(text: self.publicKey)
         let urlString = "aias://?pubkey=" + encodedKey + "&scheme=" + self.scheme
@@ -58,6 +56,11 @@ public final class Aias {
         guard let restoreData = Data(base64Encoded: encodedSignature) else { return }
         guard let signature = String(data: restoreData, encoding: .utf8) else { return }
         self.signature = signature
+        do{
+            try KeyPairManager().createSignature(text: "aaaaaa")
+        }catch{
+            
+        }
     }
     
     public func encodeData(token:String) -> String{
@@ -102,6 +105,26 @@ private class KeyPairManager {
     }
     
     func getPublicKey() throws -> String{
+        var error: Unmanaged<CFError>?
+        do{
+            let privateKey = try getPrivateKey()
+            guard let publicKey = SecKeyCopyPublicKey(privateKey as! SecKey) else{
+                throw AiasError.failedToGenerateKey
+            }
+            if let cfdata = SecKeyCopyExternalRepresentation(publicKey, &error) {
+                let data:Data = cfdata as Data
+                let b64Key = data.base64EncodedString()
+                return b64Key
+            }else{
+                throw AiasError.failedToGenerateKey
+            }
+        }catch{
+            throw AiasError.failedToGenerateKey
+        }
+        
+    }
+    
+    func getPrivateKey() throws -> SecKey{
         let tagForPrivateKey = "com.aias.key".data(using: .utf8)!
         let getquery: [String: Any] = [
             kSecClass as String: kSecClassKey,
@@ -114,20 +137,43 @@ private class KeyPairManager {
         guard status == errSecSuccess else {
             throw AiasError.failedToGetKey
         }
-
+        
         let retrievedPrivateKey = item as! SecKey
+        return retrievedPrivateKey
+    }
+    
+    func keyToString(key:SecKey) throws -> String{
         var error: Unmanaged<CFError>?
-        guard let publicKey = SecKeyCopyPublicKey(retrievedPrivateKey) else{
-            throw AiasError.failedToGenerateKey
-        }
-        if let cfdata = SecKeyCopyExternalRepresentation(publicKey, &error) {
+        if let cfdata = SecKeyCopyExternalRepresentation(key, &error) {
             let data:Data = cfdata as Data
             let b64Key = data.base64EncodedString()
             return b64Key
         }else{
             throw AiasError.failedToGenerateKey
         }
-        
+    }
+    
+    func createSignature(text:String) throws -> String{
+        var error: Unmanaged<CFError>?
+        let algorithm: SecKeyAlgorithm = .rsaSignatureMessagePKCS1v15SHA256
+        do{
+            let privateKey = try getPrivateKey()
+            guard SecKeyIsAlgorithmSupported(privateKey, .sign, algorithm) else {
+                throw AiasError.failedToGenerateSignature
+            }
+            guard let signature = SecKeyCreateSignature(
+                privateKey,
+                algorithm,
+                text.data(using: .utf8)! as CFData,
+                &error) as Data? else {
+                    throw error!.takeRetainedValue() as Error
+            }
+            let signatureString = signature.base64EncodedString()
+            print("signatureString: \(signatureString)")
+            return signatureString
+        }catch{
+            throw AiasError.failedToGenerateSignature
+        }
     }
     
 }
@@ -140,10 +186,6 @@ private class Base64Manager {
         return encodedText
     }
     
-    func decode(text:String) -> String{
-        return ""
-    }
-    
 }
 
 enum AiasError: Error{
@@ -151,4 +193,5 @@ enum AiasError: Error{
     case failedAuth
     case failedToGetKey
     case alreadyHaveSignature
+    case failedToGenerateSignature
 }

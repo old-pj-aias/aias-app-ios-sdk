@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Aias
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("aaasdafdsaf")
         // Do any additional setup after loading the view.
+        do{
+            try Aias.shared.auth()
+        }catch{
+            
+        }
     }
 
 
