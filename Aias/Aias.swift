@@ -59,6 +59,7 @@ public final class Aias {
     
     public func logout(sucess:() -> ()){
         KeyChain.remove(key: "com.aias.signature")
+        FBSignature = ""
         return sucess()
     }
     
