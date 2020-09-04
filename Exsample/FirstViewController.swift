@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FirstViewController.swift
 //  exsample
 //
 //  Created by shunta nakajima on 2020/09/03.
@@ -9,12 +9,13 @@
 import UIKit
 import Aias
 
-class ViewController: UIViewController {
-
+class FirstViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("aaasdafdsaf")
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func loginButtonPushed(){
         do{
             try Aias.shared.auth()
         }catch{

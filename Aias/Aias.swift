@@ -108,7 +108,7 @@ private class KeyPairManager {
         var error: Unmanaged<CFError>?
         do{
             let privateKey = try getPrivateKey()
-            guard let publicKey = SecKeyCopyPublicKey(privateKey as! SecKey) else{
+            guard let publicKey = SecKeyCopyPublicKey(privateKey) else{
                 throw AiasError.failedToGenerateKey
             }
             if let cfdata = SecKeyCopyExternalRepresentation(publicKey, &error) {
@@ -188,7 +188,7 @@ private class Base64Manager {
     
 }
 
-enum AiasError: Error{
+public enum AiasError: Error{
     case failedToGenerateKey
     case failedAuth
     case failedToGetKey

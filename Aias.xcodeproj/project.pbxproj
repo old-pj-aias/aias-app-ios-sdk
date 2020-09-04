@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		BC05CBD925011C610099829D /* Aias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE4361925011BF00003C0C4 /* Aias.framework */; };
 		BC05CBDA25011C610099829D /* Aias.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BCE4361925011BF00003C0C4 /* Aias.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BC77413F25016009001168C9 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC77413E25016009001168C9 /* FirstViewController.swift */; };
 		BCE4361E25011BF00003C0C4 /* Aias.h in Headers */ = {isa = PBXBuildFile; fileRef = BCE4361C25011BF00003C0C4 /* Aias.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BCE4362525011BFB0003C0C4 /* Aias.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE4362425011BFB0003C0C4 /* Aias.swift */; };
 		BCE4362E25011C2C0003C0C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE4362D25011C2C0003C0C4 /* AppDelegate.swift */; };
-		BCE4363225011C2C0003C0C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE4363125011C2C0003C0C4 /* ViewController.swift */; };
 		BCE4363525011C2C0003C0C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE4363325011C2C0003C0C4 /* Main.storyboard */; };
 		BCE4363725011C2F0003C0C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE4363625011C2F0003C0C4 /* Assets.xcassets */; };
 		BCE4363A25011C2F0003C0C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE4363825011C2F0003C0C4 /* LaunchScreen.storyboard */; };
@@ -43,13 +43,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BC77413E25016009001168C9 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstViewController.swift; path = Exsample/FirstViewController.swift; sourceTree = SOURCE_ROOT; };
 		BCE4361925011BF00003C0C4 /* Aias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Aias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE4361C25011BF00003C0C4 /* Aias.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aias.h; sourceTree = "<group>"; };
 		BCE4361D25011BF00003C0C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCE4362425011BFB0003C0C4 /* Aias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aias.swift; sourceTree = "<group>"; };
 		BCE4362B25011C2C0003C0C4 /* exsample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exsample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE4362D25011C2C0003C0C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BCE4363125011C2C0003C0C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BCE4363425011C2C0003C0C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BCE4363625011C2F0003C0C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCE4363925011C2F0003C0C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				BCE4362D25011C2C0003C0C4 /* AppDelegate.swift */,
-				BCE4363125011C2C0003C0C4 /* ViewController.swift */,
+				BC77413E25016009001168C9 /* FirstViewController.swift */,
 				BCE4363325011C2C0003C0C4 /* Main.storyboard */,
 				BCE4363625011C2F0003C0C4 /* Assets.xcassets */,
 				BCE4363825011C2F0003C0C4 /* LaunchScreen.storyboard */,
@@ -246,8 +246,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCE4363225011C2C0003C0C4 /* ViewController.swift in Sources */,
 				BCE4362E25011C2C0003C0C4 /* AppDelegate.swift in Sources */,
+				BC77413F25016009001168C9 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
