@@ -13,11 +13,11 @@ public final class Aias {
     
     public static let shared = Aias()
     
-    private var signature = ""
+    private var FBSignature = ""
     private var scheme = ""
     private var publicKey = ""
-    private var isSignatureExist:Bool{
-        signature != ""
+    public var isLoggingIn:Bool{
+        FBSignature != ""
     }
     private var isPublicKeyExist:Bool{
         publicKey != ""
@@ -26,12 +26,22 @@ public final class Aias {
     public func configure(scheme:String){
         self.scheme = scheme
         do{
-            self.publicKey = try KeyPairManager().generateKeyPair()
-        }catch{}
+            _ = try KeyPairManager().getPrivateKey()
+            do{
+                self.publicKey = try KeyPairManager().getPublicKey()
+            }catch{}
+        }catch{
+            do{
+                self.publicKey = try KeyPairManager().generateKeyPair()
+            }catch{}
+        }
+        guard let data = KeyChain.load(key: "com.aias.signature") else { return }
+        guard let signature = String(data: data, encoding: .utf8) else { return }
+        FBSignature = signature
     }
     
     public func auth() throws{
-        if isSignatureExist { throw AiasError.alreadyHaveSignature }
+        if isLoggingIn { throw AiasError.alreadyHaveSignature }
         if !isPublicKeyExist{
             do{
                 self.publicKey = try KeyPairManager().generateKeyPair()
@@ -47,6 +57,11 @@ public final class Aias {
         
     }
     
+    public func logout(sucess:() -> ()){
+        KeyChain.remove(key: "com.aias.signature")
+        return sucess()
+    }
+    
     public func loadScheme(url:URL){
         guard let host = url.host else { return }
         if host != "aias" { return }
@@ -55,16 +70,39 @@ public final class Aias {
         guard let encodedSignature = params["signature"] else { return }
         guard let restoreData = Data(base64Encoded: encodedSignature) else { return }
         guard let signature = String(data: restoreData, encoding: .utf8) else { return }
-        self.signature = signature
-        do{
-            try KeyPairManager().createSignature(text: "aaaaaa")
-        }catch{
-            
-        }
+        guard let data = signature.data(using: .utf8) else { return }
+        self.FBSignature = signature
+        _ = KeyChain.save(key: "com.aias.signature", data: data)
     }
     
-    public func encodeData(token:String) -> String{
-        return ""
+    public func encodeData(dataString:String,token:Int) -> String{
+        let signedObject = Base64Manager().encode(text: dataString) + "." + String(token)
+        var signature = ""
+        do{
+            signature = try KeyPairManager().createSignature(text: signedObject)
+        }catch{
+            return ""
+        }
+        
+        let data: [String: Any] = [
+            "data": dataString,
+            "random": token
+        ]
+        
+        let jsonObject: [String: Any] = [
+            "fair_blind_signature": FBSignature,
+            "pubkey": publicKey,
+            "signature": signature,
+            "signed": data
+        ]
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+            let jsonStr = String(bytes: jsonData, encoding: .utf8)!
+            return jsonStr
+        } catch {
+            return ""
+        }
     }
     
     private func urlComponentsToDict(comp:NSURLComponents) -> Dictionary<String, String> {
@@ -97,7 +135,7 @@ private class KeyPairManager {
         }
         if let cfdata = SecKeyCopyExternalRepresentation(generatedPublicKey, &error) {
             let data:Data = cfdata as Data
-            let b64Key = data.base64EncodedString()
+            let b64Key = SwKeyConvert.PublicKey.derToPKCS8PEM(data)
             return b64Key
         }else{
             throw AiasError.failedToGenerateKey
@@ -113,7 +151,7 @@ private class KeyPairManager {
             }
             if let cfdata = SecKeyCopyExternalRepresentation(publicKey, &error) {
                 let data:Data = cfdata as Data
-                let b64Key = data.base64EncodedString()
+                let b64Key = SwKeyConvert.PublicKey.derToPKCS8PEM(data)
                 return b64Key
             }else{
                 throw AiasError.failedToGenerateKey
@@ -169,7 +207,6 @@ private class KeyPairManager {
                     throw error!.takeRetainedValue() as Error
             }
             let signatureString = signature.base64EncodedString()
-            print("signatureString: \(signatureString)")
             return signatureString
         }catch{
             throw AiasError.failedToGenerateSignature
@@ -194,4 +231,65 @@ public enum AiasError: Error{
     case failedToGetKey
     case alreadyHaveSignature
     case failedToGenerateSignature
+}
+
+class KeyChain {
+
+    class func save(key: String, data: Data) -> OSStatus {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : key,
+            kSecValueData as String   : data ] as [String : Any]
+
+        SecItemDelete(query as CFDictionary)
+
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func remove(key:String){
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : key ] as [String : Any]
+
+        SecItemDelete(query as CFDictionary)
+    }
+
+    class func load(key: String) -> Data? {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : key,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+
+        var dataTypeRef: AnyObject? = nil
+
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+
+        if status == noErr {
+            return dataTypeRef as! Data?
+        } else {
+            return nil
+        }
+    }
+    
+
+    class func createUniqueID() -> String {
+        let uuid: CFUUID = CFUUIDCreate(nil)
+        let cfStr: CFString = CFUUIDCreateString(nil, uuid)
+
+        let swiftString: String = cfStr as String
+        return swiftString
+    }
+}
+
+extension Data {
+
+    init<T>(from value: T) {
+        var value = value
+        self.init(buffer: UnsafeBufferPointer(start: &value, count: 1))
+    }
+
+    func to<T>(type: T.Type) -> T {
+        return self.withUnsafeBytes { $0.load(as: T.self) }
+    }
 }
