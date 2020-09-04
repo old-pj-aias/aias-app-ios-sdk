@@ -45,35 +45,36 @@
         <!--Second View Controller-->
         <scene sceneID="A6H-vW-BLg">
             <objects>
-                <viewController storyboardIdentifier="SecondVC" id="AOA-ol-gkN" customClass="SecondViewController" customModule="exsample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AOA-ol-gkN" customClass="SecondViewController" customModule="exsample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AbG-rX-71i">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8nx-9f-fGa">
-                                <rect key="frame" x="124" y="420" width="166" height="56"/>
-                                <color key="backgroundColor" red="1" green="0.48347734227867856" blue="0.51377679285268107" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gOR-sT-Oxk">
+                                <rect key="frame" x="10" y="106" width="295" height="38"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="fs5-rn-KB4"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="165" id="lJT-sx-B4W"/>
+                                    <constraint firstAttribute="height" constant="38" id="cqX-pI-MId"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Log out"/>
-                                <connections>
-                                    <action selector="logoutPushed" destination="AOA-ol-gkN" eventType="touchUpInside" id="rhX-Lg-yYu"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hb0-z9-XmB">
+                                <rect key="frame" x="10" y="169" width="394" height="423"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2y-5H-wDV">
-                                <rect key="frame" x="124" y="509" width="166" height="56"/>
+                                <rect key="frame" x="322" y="106" width="82" height="34"/>
                                 <color key="backgroundColor" red="0.41984733459683565" green="1" blue="0.64593278188450098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="165" id="1Ya-ee-vXU"/>
-                                    <constraint firstAttribute="height" constant="56" id="3OB-vN-L0y"/>
+                                    <constraint firstAttribute="width" constant="82" id="10l-U8-vdE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Send Connection"/>
+                                <state key="normal" title="Send"/>
                                 <connections>
                                     <action selector="sendConnectionPushed" destination="AOA-ol-gkN" eventType="touchUpInside" id="BYD-yq-ZhI"/>
                                 </connections>
@@ -81,19 +82,47 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="e2y-5H-wDV" firstAttribute="leading" secondItem="Luh-1W-5IX" secondAttribute="leading" constant="124" id="GbB-8U-ZjJ"/>
-                            <constraint firstItem="e2y-5H-wDV" firstAttribute="top" secondItem="8nx-9f-fGa" secondAttribute="bottom" constant="33" id="Pd4-VV-Pf9"/>
-                            <constraint firstItem="8nx-9f-fGa" firstAttribute="centerY" secondItem="AbG-rX-71i" secondAttribute="centerY" id="WPF-Sc-vag"/>
-                            <constraint firstItem="Luh-1W-5IX" firstAttribute="trailing" secondItem="e2y-5H-wDV" secondAttribute="trailing" constant="124" id="Xlj-FF-DRc"/>
-                            <constraint firstItem="8nx-9f-fGa" firstAttribute="centerX" secondItem="AbG-rX-71i" secondAttribute="centerX" id="uZZ-wg-hxD"/>
-                            <constraint firstItem="Luh-1W-5IX" firstAttribute="trailing" secondItem="8nx-9f-fGa" secondAttribute="trailing" constant="124" id="z0x-lj-nQn"/>
+                            <constraint firstItem="gOR-sT-Oxk" firstAttribute="leading" secondItem="Luh-1W-5IX" secondAttribute="leading" constant="10" id="Zzk-Be-hxU"/>
+                            <constraint firstItem="Luh-1W-5IX" firstAttribute="trailing" secondItem="e2y-5H-wDV" secondAttribute="trailing" constant="10" id="e9U-xL-ljN"/>
+                            <constraint firstItem="e2y-5H-wDV" firstAttribute="leading" secondItem="gOR-sT-Oxk" secondAttribute="trailing" constant="17" id="oZO-6F-L9t"/>
+                            <constraint firstItem="gOR-sT-Oxk" firstAttribute="top" secondItem="Luh-1W-5IX" secondAttribute="top" constant="18" id="rBq-5U-PLn"/>
+                            <constraint firstItem="e2y-5H-wDV" firstAttribute="top" secondItem="Luh-1W-5IX" secondAttribute="top" constant="18" id="tsH-x6-2EX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Luh-1W-5IX"/>
                     </view>
+                    <navigationItem key="navigationItem" id="XmS-k3-ICF">
+                        <barButtonItem key="rightBarButtonItem" title="Log out" id="oJv-MX-30a">
+                            <connections>
+                                <action selector="logoutPushed" destination="AOA-ol-gkN" id="Dc7-S7-Nm9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textField" destination="gOR-sT-Oxk" id="4eV-EK-sPo"/>
+                        <outlet property="textView" destination="hb0-z9-XmB" id="9be-Pp-dWb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ScV-NO-vsb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="828" y="139"/>
+            <point key="canvasLocation" x="1669.5652173913045" y="138.61607142857142"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="G5X-eZ-fN6">
+            <objects>
+                <navigationController storyboardIdentifier="SecondVC" automaticallyAdjustsScrollViewInsets="NO" id="cla-BJ-i2x" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Tvv-jd-pgP">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AOA-ol-gkN" kind="relationship" relationship="rootViewController" id="SA2-jC-m4S"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z8o-yU-eRj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="827.536231884058" y="138.61607142857142"/>
         </scene>
     </scenes>
 </document>
